@@ -1,9 +1,9 @@
 // Letterboxd Top 500 as clean JSON, served from Cloudflare Workers.
 //
 // The official Top 500 list (500 films across 5 pages) is read directly
-// from letterboxd.com — the poster grid is server-rendered with all
+// from letterboxd.com - the poster grid is server-rendered with all
 // metadata in data attributes, so no proxy is needed. Only facts are
-// served (rank, title, year, link) — no posters, ratings or images.
+// served (rank, title, year, link) - no posters, ratings or images.
 //
 //   GET /               help page
 //   GET /top500         full list, cached up to a week
@@ -367,16 +367,16 @@ function helpHtml() {
 <h1>Letterboxd Top 500 API</h1>
 <p>Clean JSON served from the edge. The official Letterboxd Top 500 list (facts only: rank, title, year, link).</p>
 <ul>
-<li><code>GET /top500</code> — full Top 500 list</li>
-<li><code>GET /film/harakiri</code> — single film by Letterboxd slug</li>
-<li><code>GET /random</code> — random film from the list</li>
+<li><code>GET /top500</code> - full Top 500 list</li>
+<li><code>GET /film/harakiri</code> - single film by Letterboxd slug</li>
+<li><code>GET /random</code> - random film from the list</li>
 </ul>
 <p><b>List filters</b> (work on /top500):</p>
 <ul>
-<li><code>?search=godfather</code> — title contains (case-insensitive)</li>
-<li><code>?year=1972</code> — exact year</li>
-<li><code>?sort=year&amp;order=desc</code> — sort by <code>rank|year|title</code></li>
-<li><code>?limit=10&amp;offset=20</code> — pagination</li>
+<li><code>?search=godfather</code> - title contains (case-insensitive)</li>
+<li><code>?year=1972</code> - exact year</li>
+<li><code>?sort=year&amp;order=desc</code> - sort by <code>rank|year|title</code></li>
+<li><code>?limit=10&amp;offset=20</code> - pagination</li>
 </ul>
 <p>Examples:<br>
 <code>/top500?search=godfather</code><br>

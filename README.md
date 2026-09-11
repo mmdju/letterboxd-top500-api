@@ -10,7 +10,7 @@ Clean JSON API for the official Letterboxd Top 500 films list, read live from
 (500 films across 5 pages, poster metadata is server-rendered so no proxy is needed)
 and served from Cloudflare Workers with edge caching.
 
-**No deploy needed — use the hosted API right now:**
+**No deploy needed - use the hosted API right now:**
 
 Base URL: `https://letterboxd-top500.mmdju.workers.dev`
 
@@ -19,18 +19,18 @@ Base URL: `https://letterboxd-top500.mmdju.workers.dev`
 - Single film: [*/film/harakiri*](https://letterboxd-top500.mmdju.workers.dev/film/harakiri)
 - Random pick: [*/random*](https://letterboxd-top500.mmdju.workers.dev/random)
 
-Just open the links — no key, no setup. (Deploy your own copy only if you want
-your own cache, stats and rate limits — see below.)
+Just open the links - no key, no setup. (Deploy your own copy only if you want
+your own cache, stats and rate limits - see below.)
 
 ## Features
 
 - Full Top 500 list (rank, title, year, Letterboxd slug + link)
-- Edge cached (refreshed max once a week — the list barely changes), long fallback chain
+- Edge cached (refreshed max once a week - the list barely changes), long fallback chain
 - Bundled seed data so the API answers even when the live fetch is down
 - Search, filter, sort and pagination
 - Single-film lookup (`/film/:slug`) and `/random`
 - Request counters backed by D1 (`/stats`)
-- Facts only — no posters, ratings or images
+- Facts only - no posters, ratings or images
 
 ## Endpoints
 
@@ -68,7 +68,7 @@ Example item:
 ```
 
 Only factual fields are served (rank, title, year, link).
-No posters, ratings or images — those belong to their copyright holders.
+No posters, ratings or images - those belong to their copyright holders.
 
 List responses wrap the items with paging info:
 
@@ -88,7 +88,7 @@ List responses wrap the items with paging info:
 
 ## Examples
 
-- [Python](examples/python.py) — standard library only, no install needed:
+- [Python](examples/python.py) - standard library only, no install needed:
 
 ```bash
 # against wrangler dev (PowerShell):
@@ -168,21 +168,21 @@ These are not listed on the `/` help page, but they work:
 
 ## Notes
 
-- The list pages are read directly — no proxy needed. If the live fetch fails,
+- The list pages are read directly - no proxy needed. If the live fetch fails,
   the API serves the last good cached copy with `"stale": true`, otherwise the
   bundled seed (`src/seed.json`, snapshot 2026-09-11).
 - Note: the Python version's live fetch can be throttled on some home/office
   networks (Letterboxd sometimes resets Python's default TLS fingerprint
-  mid-response — it retries, then falls back to seed). The Worker version is
+  mid-response - it retries, then falls back to seed). The Worker version is
   unaffected. Either way the API keeps answering.
 - The official list updates about once a week, so the cache lives for a week
   (`expirationTtl` is 4 weeks as a safety net).
-- List pages carry no ratings — that's why items have rank/title/year/link only.
+- List pages carry no ratings - that's why items have rank/title/year/link only.
   Ratings can be added later via a TMDB enrichment step.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
 
 ## Keywords
 

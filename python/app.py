@@ -1,4 +1,4 @@
-"""Letterboxd Top 500 API — Python version (FastAPI).
+"""Letterboxd Top 500 API - Python version (FastAPI).
 
 Same API as the Cloudflare Worker in ../src, for those who'd rather
 self-host with Python:
@@ -274,7 +274,7 @@ def fetch_live_list():
         url = LIST_BASE if page == 1 else f"{LIST_BASE}page/{page}/"
         parsed = []
         # urllib sometimes drops chunked responses midway (partial HTML).
-        # Retry a few times — a good attempt parses 100 films.
+        # Retry a few times - a good attempt parses 100 films.
         for attempt in range(5):
             parsed = parse_list_page(http_get(url))
             if len(parsed) >= 50:
@@ -413,10 +413,10 @@ def help_page():
 <h1>Letterboxd Top 500 API</h1>
 <p>Clean JSON served from Python. The official Letterboxd Top 500 list (facts only).</p>
 <ul>
-<li><code>GET /top500</code> — full Top 500 list</li>
-<li><code>GET /film/harakiri</code> — single film</li>
-<li><code>GET /random</code> — random film</li>
+<li><code>GET /top500</code> - full Top 500 list</li>
+<li><code>GET /film/harakiri</code> - single film</li>
+<li><code>GET /random</code> - random film</li>
 </ul>
 <p><b>Filters:</b> <code>?search=godfather&year=1972&sort=title&order=asc&limit=10&offset=0</code></p>
-<p>Docs: <a href="/docs">/docs</a> — OpenAPI auto-generated.</p>
+<p>Docs: <a href="/docs">/docs</a> - OpenAPI auto-generated.</p>
 </body></html>"""
