@@ -4,17 +4,13 @@ compatibility_date = "2025-01-01"
 # Cloudflare account: Mmdju (workers.dev subdomain: mmdju)
 account_id = "525eb5c067d16e8bcb2eab23b20ee7a1"
 
-# LOCAL-ONLY placeholders (valid format, never touch the network in `wrangler dev`).
-# Before the first real deploy, create the resources and put the real ids here:
-#   npx.cmd wrangler kv namespace create CACHE
-#   npx.cmd wrangler d1 create letterboxd-top500-db
-#   npx.cmd wrangler d1 migrations apply letterboxd-top500-db --remote
+# Cloudflare resources (created 2026-09-11 on the Mmdju account).
 [[kv_namespaces]]
 binding = "CACHE"
-id = "00000000000000000000000000000000"
+id = "b319952e202a46d5aca1b0ecd0afbf8a"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "letterboxd-top500-db"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "35f4b169-28d3-4470-9170-3238eff40c4a"
 migrations_dir = "migrations"
