@@ -10,8 +10,17 @@ Clean JSON API for the official Letterboxd Top 500 films list, read live from
 (500 films across 5 pages, poster metadata is server-rendered so no proxy is needed)
 and served from Cloudflare Workers with edge caching.
 
-> Status: local development — not deployed yet. Run it on your own PC (below)
-> and point `BASE_URL` at your server.
+**No deploy needed — use the hosted API right now:**
+
+Base URL: `https://letterboxd-top500.mmdju.workers.dev`
+
+- Full list: [*/top500*](https://letterboxd-top500.mmdju.workers.dev/top500)
+- First 10: [*/top500?limit=10*](https://letterboxd-top500.mmdju.workers.dev/top500?limit=10)
+- Single film: [*/film/harakiri*](https://letterboxd-top500.mmdju.workers.dev/film/harakiri)
+- Random pick: [*/random*](https://letterboxd-top500.mmdju.workers.dev/random)
+
+Just open the links — no key, no setup. (Deploy your own copy only if you want
+your own cache, stats and rate limits — see below.)
 
 ## Features
 
@@ -134,7 +143,7 @@ npx wrangler dev        # local test at http://localhost:8787/top500
 KV and D1 work locally with emulation, no setup needed for a first test.
 (Windows: if `npx` is blocked by the execution policy, run `npx.cmd wrangler dev` instead.)
 
-## Deploy (when you're ready to go public)
+## Deploy
 
 ```bash
 npx wrangler kv namespace create CACHE

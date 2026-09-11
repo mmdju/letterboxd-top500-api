@@ -11,8 +11,8 @@ import os
 import urllib.parse
 import urllib.request
 
-# Local dev servers. After deploy, point at your public Worker URL.
-BASE = os.environ.get("BASE_URL", "http://localhost:8787")
+# Local dev servers (wrangler dev / uvicorn). After deploy, point at your public Worker URL.
+BASE = os.environ.get("BASE_URL", "https://letterboxd-top500.mmdju.workers.dev")
 
 
 def get(path):
