@@ -1,0 +1,23 @@
+{
+  "name": "letterboxd-top500-api",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Clean JSON API for the official Letterboxd Top 500 list on Cloudflare Workers.",
+  "keywords": ["letterboxd", "top500", "movies", "cloudflare-workers", "api"],
+  "homepage": "https://github.com/mmdju/letterboxd-top500-api#readme",
+  "bugs": {
+    "url": "https://github.com/mmdju/letterboxd-top500-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mmdju/letterboxd-top500-api.git"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-worker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx wrangler deploy --dry-run
+
+  validate-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r python/requirements.txt
+      - run: python -m py_compile python/app.py examples/python.py
+      - run: |
+          cd python
+          (python -m uvicorn app:app --port 8000 &) 
+          sleep 12
+          curl -sf "http://127.0.0.1:8000/top500?limit=1" | grep -o '"count":500'
+          curl -sf "http://127.0.0.1:8000/top500?limit=1" | grep -o '"total":500'
+          curl -sf "http://127.0.0.1:8000/top500?search=harakiri" | grep -o 'Harakiri'
+          curl -sf "http://127.0.0.1:8000/top500?year=1962&limit=5" | grep -o '"year":1962'
+          curl -sf "http://127.0.0.1:8000/top500?offset=10&limit=5" | grep -o '"offset":10'
+          curl -sf "http://127.0.0.1:8000/top500?sort=title&limit=3" | grep -o '"sort":"title"'
+          curl -sf "http://127.0.0.1:8000/film/harakiri" | grep -o 'Harakiri'
+          curl -sf "http://127.0.0.1:8000/random" | grep -o '"type":"movie"'
