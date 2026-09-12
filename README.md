@@ -20,7 +20,7 @@ Base URL: `https://letterboxd-top500.mmdju.workers.dev`
 - Random pick: [*/random*](https://letterboxd-top500.mmdju.workers.dev/random)
 
 Just open the links - no key, no setup. (Deploy your own copy only if you want
-your own cache, stats and rate limits - see below.)
+your own cache and stats - see below.)
 
 ## Features
 
@@ -153,7 +153,7 @@ npx wrangler d1 create letterboxd-top500-db
 # put the binding/id into wrangler.toml, then:
 npx wrangler d1 migrations apply letterboxd-top500-db --remote
 
-npx wrangler secret put ADMIN_KEY   # optional, protects /refresh
+npx wrangler secret put ADMIN_KEY   # required to enable /refresh (fail-closed without it)
 npx wrangler deploy
 ```
 
@@ -163,8 +163,8 @@ These are not listed on the `/` help page, but they work:
 
 | Method | Path | Description |
 | :--- | :--- | :--- |
-| `GET` | `/refresh?key=ADMIN_KEY` | Force a fresh fetch of the list (needs the key only if `ADMIN_KEY` is set) |
-| `GET` | `/stats` | Total request counts, backed by D1 |
+| `GET` | `/refresh` | Force a fresh fetch of the list. Admin-only: send `Authorization: Bearer ADMIN_KEY` (or `?key=` fallback). Returns `503` until `ADMIN_KEY` is configured |
+| `GET` | `/stats` | Total request counts, backed by D1 (public) |
 
 ## Notes
 
@@ -184,14 +184,12 @@ These are not listed on the `/` help page, but they work:
 
 MIT - see [LICENSE](LICENSE).
 
-## Keywords
-
-letterboxd top 500 api, letterboxd api, best movies list api, top rated films json, free movies api, cloudflare workers api, fastapi movies api.
-
 ## Project structure
 
 ```
 src/index.js        worker (JS version): routes, live fetch, parsing, cache, stats
+src/sort.mjs        pure list-sort comparator (nulls last, both directions)
+tests/sort.test.mjs unit tests for the comparator (`npm test`)
 src/seed.json       seed data, top 500 films (500 titles, facts only)
 python/app.py       same API in Python (FastAPI), self-hostable + importable (query_list/get_by_slug/get_random)
 python/requirements.txt  Python dependencies (pinned)

@@ -19,9 +19,10 @@ Use as a library in your own project:
     lucky = get_random()
 
 Config via environment (.env supported if python-dotenv is installed):
-    ADMIN_KEY=...     # optional, protects /refresh
+    ADMIN_KEY=...     # required to enable /refresh (fail-closed without it)
 """
 
+import hmac
 import html
 import http.client
 import json
@@ -51,6 +52,25 @@ except ImportError:
     pass
 
 ADMIN_KEY = os.environ.get("ADMIN_KEY", "")
+
+
+def admin_key_from(request: Request, key: str) -> str:
+    """Key via `Authorization: Bearer <key>` (preferred) or `?key=` fallback."""
+    auth = request.headers.get("authorization", "")
+    if auth.lower().startswith("bearer "):
+        return auth[7:].strip()
+    return key or ""
+
+
+def check_admin(key: str):
+    """Fail closed: /refresh is unavailable until ADMIN_KEY is configured."""
+    if not ADMIN_KEY:
+        return JSONResponse(
+            {"error": "Refresh unavailable (ADMIN_KEY not configured)"}, status_code=503
+        )
+    if not hmac.compare_digest(key or "", ADMIN_KEY):
+        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+    return None
 
 LIST_BASE = "https://letterboxd.com/official/list/letterboxds-top-500-films/"
 LIST_PAGES = 5
@@ -378,10 +398,11 @@ def random_title():
 
 
 @app.get("/refresh")
-def refresh(key: str = ""):
+def refresh(request: Request, key: str = ""):
     record_hit("/refresh")
-    if ADMIN_KEY and key != ADMIN_KEY:
-        return JSONResponse({"error": "Unauthorized"}, status_code=401)
+    denied = check_admin(admin_key_from(request, key))
+    if denied is not None:
+        return denied
     result = get_list(force=True)
     if result.get("fallback"):
         return {
