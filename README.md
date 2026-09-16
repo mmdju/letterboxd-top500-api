@@ -1,5 +1,7 @@
 # Letterboxd Top 500 API
 
+![Letterboxd Top 500 API banner](assets/letterboxd-top500.png)
+
 [![CI](https://github.com/mmdju/letterboxd-top500-api/actions/workflows/ci.yml/badge.svg)](https://github.com/mmdju/letterboxd-top500-api/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
