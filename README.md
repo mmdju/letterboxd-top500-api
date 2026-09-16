@@ -201,3 +201,7 @@ examples/python.py  tiny client example (stdlib only)
 migrations/         D1 schema for the request counters
 wrangler.toml       Worker, KV and D1 config (local placeholders until first deploy)
 ```
+
+## See also
+
+API for the other list lives here: **[IMDb Top 250](https://github.com/mmdju/imdb-top250-api)** - https://imdb-top250.mmdju.workers.dev.
